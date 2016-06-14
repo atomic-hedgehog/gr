@@ -57,6 +57,10 @@
    bob-b
    bob-c])
 
+
+(def rendered-string "C\tBob\t:male\tblue\t1990-10-10\nD\tBob\t:female\tblue\t1960-10-10\nB\tBob\t:female\tblue\t1980-10-10\nE\tBob\t:male\tblue\t1970-10-10\n")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Public API
 (defn sorted-by-gender? [result]
   (= result
      gender-sorted-test-data))
@@ -77,6 +81,14 @@
   (= result
      dob-sorted-test-data))
 
-(deftest test-sort-by-last-anem
+(deftest test-sort-by-last-name
   (testing "Sorts by last name descending"
     (is (sorted-by-dob? (by-date-of-birth test-data)))))
+
+(defn rendered-to-string? [result]
+  (= result
+     rendered-string))
+
+(deftest test-sort-by-last-name
+  (testing "Renders the data set to a string"
+    (is (rendered-to-string? (render-data-to-string test-data)))))
