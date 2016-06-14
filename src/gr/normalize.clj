@@ -33,20 +33,35 @@
    (s/one s/Str "favoriteColor")
    (s/one s/Str "dateOfBirth")])
 
-(s/defn comma-delimited-parser
-  "Parses a comma-delimited row into it's constituant parts"
-  [row :- s/Str] :- ParsedRow
-  (map clojure.string/trim
-       (clojure.string/split row #",")))
+(s/defn generate-parser [regex]
+  (fn [row]
+   (map clojure.string/trim
+       (clojure.string/split row regex))))
+
+(def comma-delimited-parser (generate-parser #","))
+(def pipe-delimited-parser (generate-parser #"\|"))
+(def space-delimited-parser (generate-parser #" "))
 
 (def comma-delimited-format
   {:genders {"m" :male
              "f" :female}
    :parser-fn comma-delimited-parser})
 
+(def pipe-delimited-format
+  {:genders {"m" :male
+             "f" :female}
+   :parser-fn pipe-delimited-parser})
+
+(def space-delimited-format
+  {:genders {"male" :male
+             "female" :female}
+   :parser-fn space-delimited-parser})
+
 ;; format detection
 (def formats
-  {"," comma-delimited-format})
+  {"," comma-delimited-format
+   "" space-delimited-format
+   "|" pipe-delimited-format})
 
 (s/defn detect-format
   "Detects the separator format of a row. Assumptions:

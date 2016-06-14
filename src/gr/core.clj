@@ -19,9 +19,16 @@
 (s/defn normalize-rows [rows :- [s/Str]] :-s n/NormalizedRecord
   (map n/normalize-row rows))
 
+(defn print-sorted-dataset [title sort-fn normalized-data]
+    (println "------ " title "--------")
+    (println
+      (v/render-data-to-string (sort-fn normalized-data))))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (let [all-lines (load-all-data args)]
-    (println
-      (v/render-data-to-string (normalize-rows all-lines)))))
+  (let [all-lines (load-all-data args)
+        normalized-data (normalize-rows all-lines)]
+    (print-sorted-dataset "Gender Sorted" v/by-gender normalized-data)
+    (print-sorted-dataset "Last Name Descending Sorted" v/by-last-name normalized-data)
+    (print-sorted-dataset "DOB Sorted" v/by-date-of-birth normalized-data)))
