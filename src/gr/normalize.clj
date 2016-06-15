@@ -1,6 +1,7 @@
 (ns gr.normalize
   (:require [schema.core :as s]
-            [clj-time.core :as t]))
+            [clj-time.format :as f])
+  (:import  [org.joda.time DateTime]))
 
 ;; TODO remove this
 (s/set-fn-validation! true)
@@ -13,7 +14,7 @@
    :last-name s/Str
    :gender s/Keyword
    :favorite-color s/Str
-   :date-of-birth s/Str})
+   :date-of-birth DateTime})
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -88,5 +89,5 @@
      :first-name first-name
      :gender (get-in formatter [:genders gender] :unknown)
      :favorite-color favorite-color
-     :date-of-birth date-of-birth}))
+     :date-of-birth (f/parse (f/formatter :date) date-of-birth)}))
 

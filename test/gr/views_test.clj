@@ -1,7 +1,12 @@
 (ns gr.views-test
   (:require [clojure.test :refer :all]
+            [clj-time.format :as f]
             [gr.views :refer :all]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Helper Functions
+(defn parse-date [date]
+  (f/parse (f/formatter :date) date))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test Data
@@ -10,28 +15,28 @@
    :last-name "B"
    :gender :female
    :favorite-color "blue"
-   :date-of-birth "1980-10-10"})
+   :date-of-birth (parse-date "1980-10-10")})
 
 (def bob-c
   {:first-name "Bob"
    :last-name "C"
    :gender :male
    :favorite-color "blue"
-   :date-of-birth "1990-10-10"})
+   :date-of-birth (parse-date "1990-10-10")})
 
 (def bob-d
    {:first-name "Bob"
     :last-name "D"
     :gender :female
     :favorite-color "blue"
-    :date-of-birth "1960-10-10"})
+    :date-of-birth (parse-date "1960-10-10")})
 
 (def bob-e
   {:first-name "Bob"
    :last-name "E"
    :gender :male
    :favorite-color "blue"
-   :date-of-birth "1970-10-10"})
+   :date-of-birth (parse-date "1970-10-10")})
 
 (def test-data
   [bob-c
@@ -58,7 +63,7 @@
    bob-c])
 
 
-(def rendered-string "C\tBob\t:male\tblue\t1990-10-10\nD\tBob\t:female\tblue\t1960-10-10\nB\tBob\t:female\tblue\t1980-10-10\nE\tBob\t:male\tblue\t1970-10-10\n")
+(def rendered-string "C\tBob\t:male\tblue\t10/10/1990\nD\tBob\t:female\tblue\t10/10/1960\nB\tBob\t:female\tblue\t10/10/1980\nE\tBob\t:male\tblue\t10/10/1970\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Public API
 (defn sorted-by-gender? [result]
