@@ -1,36 +1,35 @@
 # gr
 
-FIXME: description
+An application to display normalized favortie-color records.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Clone this repo
 
 ## Usage
 
-FIXME: explanation
+The easiest way to run the app is with Leiningen:
 
-    $ java -jar gr-0.1.0-standalone.jar [args]
+    $ lein run  [data files]
+
+gr will print out views of all of the data from the data files combined and normalized.  In addition, a REST server will be started that allows the data to be viewed or new records to be added.
+
+
+### Adding data with curl
+The following curl command can be used to add records from the CLI:
+`curl --data "last-name=Doe&first-name=Eve&gender=female&favorite-color=red&date-of-birth=1980-10-10" http://localhost:3333/records`
 
 ## Options
 
-FIXME: listing of options this app accepts.
+gr accepts any number of data files in one of the three formats: space-delimited, comma-delimited, or pipe-delimited.  There are example data files in `resources/examples`
 
 ## Examples
 
-...
+    $ lein run  resources/examples/comma_delimited
 
-### Bugs
 
-...
+### Things I didn't have time for
 
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2016 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+* Better tests
+* More function docs
+* command line arg parsing to control the rest server and views
