@@ -3,6 +3,7 @@
   (:require [schema.core :as s ]
             [clj-time.core :as t]
             [gr.normalize :as n]
+            [gr.data :as data]
             [gr.views :as v]))
 
 ;; TODO remove this
@@ -28,7 +29,9 @@
   "I don't do a whole lot ... yet."
   [& args]
   (let [all-lines (load-all-data args)
-        normalized-data (normalize-rows all-lines)]
+        normalized-data (normalize-rows all-lines)
+        connection (data/connect)]
+    (map #(data/save-record connection %) normalized-data)
     (print-sorted-dataset "Gender Sorted" v/by-gender normalized-data)
     (print-sorted-dataset "Last Name Descending Sorted" v/by-last-name normalized-data)
     (print-sorted-dataset "DOB Sorted" v/by-date-of-birth normalized-data)))
