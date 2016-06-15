@@ -7,6 +7,7 @@
                  [clj-time  "0.12.0"]
                  [compojure  "1.5.0"]
                  [ring  "1.5.0"]
+                 [ring/ring-defaults  "0.2.1"]
                  [org.clojure/data.json  "0.2.6"]
                  [prismatic/schema  "1.1.2"]]
   :main ^:skip-aot gr.core

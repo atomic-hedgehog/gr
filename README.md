@@ -17,7 +17,7 @@ gr will print out views of all of the data from the data files combined and norm
 
 ### Adding data with curl
 The following curl command can be used to add records from the CLI:
-`curl --data "last-name=Doe&first-name=Eve&gender=female&favorite-color=red&date-of-birth=1980-10-10" http://localhost:3333/records`
+`curl --data "last-name=Doe&first-name=Eve&gender=f&favorite-color=red&date-of-birth=1980-10-10" http://localhost:3333/records`
 
 ## Options
 

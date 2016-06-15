@@ -3,6 +3,7 @@
             [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.adapter.jetty :refer [run-jetty]]
+            [ring.middleware.defaults :refer :all]
             [clojure.data.json]
             [clj-time.format :as f]
             [gr.normalize :as n]
@@ -39,4 +40,4 @@
 ;; Public API
 (defn start [initial-data-set jetty-params]
   (reset! data initial-data-set)
-  (run-jetty rest-handler jetty-params))
+  (run-jetty (wrap-defaults rest-handler api-defaults) jetty-params))
