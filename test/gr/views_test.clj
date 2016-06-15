@@ -64,6 +64,8 @@
 
 
 (def rendered-string "C\tBob\t:male\tblue\t10/10/1990\nD\tBob\t:female\tblue\t10/10/1960\nB\tBob\t:female\tblue\t10/10/1980\nE\tBob\t:male\tblue\t10/10/1970\n")
+
+(def json-string "[{\"first-name\":\"Bob\",\"last-name\":\"C\",\"gender\":\"male\",\"favorite-color\":\"blue\",\"date-of-birth\":\"10\\/10\\/1990\"},{\"first-name\":\"Bob\",\"last-name\":\"D\",\"gender\":\"female\",\"favorite-color\":\"blue\",\"date-of-birth\":\"10\\/10\\/1960\"},{\"first-name\":\"Bob\",\"last-name\":\"B\",\"gender\":\"female\",\"favorite-color\":\"blue\",\"date-of-birth\":\"10\\/10\\/1980\"},{\"first-name\":\"Bob\",\"last-name\":\"E\",\"gender\":\"male\",\"favorite-color\":\"blue\",\"date-of-birth\":\"10\\/10\\/1970\"}]")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Public API
 (defn sorted-by-gender? [result]
@@ -97,3 +99,11 @@
 (deftest test-sort-by-last-name
   (testing "Renders the data set to a string"
     (is (rendered-to-string? (render-data-to-string test-data)))))
+
+(defn rendered-to-json? [result]
+  (= result
+     json-string))
+
+(deftest test-sort-by-last-name
+  (testing "Renders the data set to json"
+    (is (rendered-to-json? (render-data-to-json test-data)))))

@@ -1,6 +1,7 @@
 (ns gr.views
   (:require [schema.core :as s]
             [clj-time.format :as f]
+            [clojure.data.json :as json]
             [gr.normalize :refer [NormalizedRecord]]))
 
 ;; TODO remove this
@@ -16,6 +17,11 @@
        (:gender row) "\t"
        (:favorite-color row) "\t"
        (f/unparse (f/formatter display-format) (:date-of-birth row)) "\n"))
+
+(defn date-converter [map-key value]
+  (if  (= map-key :date-of-birth)
+    (f/unparse (f/formatter display-format) value)
+    value))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Public API
@@ -37,3 +43,8 @@
                  (render-row-to-string normalized-record)))
           ""
           data))
+
+(s/defn render-data-to-json
+  [data :- [NormalizedRecord]] :- s/Str
+  (json/write-str data
+                  :value-fn date-converter))
