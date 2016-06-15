@@ -3,7 +3,7 @@
   (:require [schema.core :as s ]
             [clj-time.core :as t]
             [gr.normalize :as n]
-            [gr.data :as data]
+            [gr.rest-server :as rest-server]
             [gr.views :as v]))
 
 ;; TODO remove this
@@ -17,7 +17,7 @@
 (s/defn load-all-data [file-paths :- [s/Str]] :- [s/Str]
   (flatten (map load-data file-paths)))
 
-(s/defn normalize-rows [rows :- [s/Str]] :-s n/NormalizedRecord
+(s/defn normalize-rows [rows :- [s/Str]] :- n/NormalizedRecord
   (map n/normalize-row rows))
 
 (defn print-sorted-dataset [title sort-fn normalized-data]
@@ -29,9 +29,8 @@
   "I don't do a whole lot ... yet."
   [& args]
   (let [all-lines (load-all-data args)
-        normalized-data (normalize-rows all-lines)
-        connection (data/connect)]
-    (map #(data/save-record connection %) normalized-data)
+        normalized-data (normalize-rows all-lines)]
     (print-sorted-dataset "Gender Sorted" v/by-gender normalized-data)
     (print-sorted-dataset "Last Name Descending Sorted" v/by-last-name normalized-data)
-    (print-sorted-dataset "DOB Sorted" v/by-date-of-birth normalized-data)))
+    (print-sorted-dataset "DOB Sorted" v/by-date-of-birth normalized-data)
+    (rest-server/start normalized-data {:port 3333})))
